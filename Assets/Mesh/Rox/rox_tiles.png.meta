@@ -112,7 +112,7 @@ TextureImporter:
         width: 296
         height: 291
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -120,6 +120,27 @@ TextureImporter:
       bones: []
       spriteID: 74ca91d30c1273949aebd6102d199b71
       internalID: 1397550700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rox_tiles_2
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 257
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6a9d692ed05fe542831a416ce2b8485
+      internalID: 2033317556
       vertices: []
       indices: 
       edges: []
@@ -136,6 +157,8 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       rox_tiles_0: 1397550700
+      rox_tiles_1: -1638237306
+      rox_tiles_2: 2033317556
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
