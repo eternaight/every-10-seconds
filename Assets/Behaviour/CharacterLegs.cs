@@ -10,7 +10,7 @@ public class CharacterLegs : MonoBehaviour
     [SerializeField] private float jumpFallTime;
     [SerializeField] private float jumpFloatTime;
     [SerializeField] private float jumpHeight;
-    private bool grounded = true;
+    public bool Grounded { get; private set; }
     private bool intentionToJump;
     private float jumpTimer;
 
@@ -40,9 +40,9 @@ public class CharacterLegs : MonoBehaviour
     
     private void HandleJump() {
 
-        grounded = CheckGrounded();
+        Grounded = CheckGrounded();
 
-        if (grounded) {
+        if (Grounded) {
             jumpTimer = 1;
         }
 
@@ -53,7 +53,7 @@ public class CharacterLegs : MonoBehaviour
             rb.velocity = velocity;
         }
 
-        if (!grounded) {
+        if (!Grounded) {
             var gravity = -2 * jumpHeight / (jumpAscendTime * jumpAscendTime);
             
             if (rb.velocity.y < 0) {
