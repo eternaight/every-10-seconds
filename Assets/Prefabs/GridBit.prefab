@@ -241,7 +241,7 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   glyphSR: {fileID: 7731349427131200257}
-  glyphExtensionColor: {r: 0.7494422, g: 0.9254902, b: 0.5019608, a: 1}
-  glyphRetractionColor: {r: 1, g: 0.3443396, b: 0.3443396, a: 1}
+  glyphExtensionColor: {r: 1, g: 1, b: 1, a: 1}
+  glyphRetractionColor: {r: 0.75618434, g: 0.33490568, b: 1, a: 1}
   glyphNeutralColor: {r: 0, g: 0, b: 0, a: 0}
   smoothness: 0.05
