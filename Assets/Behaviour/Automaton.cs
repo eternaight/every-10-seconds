@@ -18,7 +18,7 @@ public class Automaton {
 
         foreach (char c in rules[0]) birthconditions.Add(c - '0');
         foreach (char c in rules[1]) survivalConditions.Add(c - '0');
-        maxState = int.Parse(rules[2]) - 1;
+        maxState = (rules.Length > 2) ? int.Parse(rules[2]) - 1 : 1;
 
         CreateTheGrid(dimensions, fillType);
     }

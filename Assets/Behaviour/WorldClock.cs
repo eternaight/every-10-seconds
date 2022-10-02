@@ -3,23 +3,17 @@ using UnityEngine;
 public class WorldClock : MonoBehaviour
 {
     public static event System.Action OnTick;
-    private static WorldClock singletonInstance;
-
-    [SerializeField] private float periodSeconds = 10;
-    public static float PeriodSeconds => singletonInstance.periodSeconds;
 
     private void Start() {
+        MenuManager.OnExitMenu += Restart;
+    }
 
-        if (singletonInstance != null) {
-            Destroy(this);
-            return;
-        }
-
-        singletonInstance = this;
-        InvokeRepeating(nameof(Tick), 0f, periodSeconds);
+    private void Restart() {
+        CancelInvoke(nameof(Tick));
+        InvokeRepeating(nameof(Tick), 0f, MenuManager.ClockPeriod);
     }
 
     private void Tick() {
-        OnTick?.Invoke();        
+        OnTick?.Invoke();
     }
 }

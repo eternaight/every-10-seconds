@@ -13,7 +13,7 @@ public class GridBit : MonoBehaviour {
     [SerializeField] private Color glyphNeutralColor = Color.clear;
 
     [SerializeField] private float smoothness = 0.05f;
-    private float MoveNotice => WorldClock.PeriodSeconds * 0.5f;
+    private float MoveNotice => MenuManager.ClockPeriod * 0.5f;
 
     private float state;
     private float queuedState;
@@ -37,7 +37,7 @@ public class GridBit : MonoBehaviour {
             glyphSR.color = Color.Lerp(glyphSR.color, glyphNeutralColor, smoothness);
             blockSR.color = Color.Lerp(blockSR.color, blockGradient.Evaluate(state), smoothness);
             transform.position = Vector3.Lerp(transform.position, 
-                new Vector3(transform.position.x, transform.position.y, -state * 2f), smoothness);
+                new Vector3(transform.position.x, transform.position.y, -state), smoothness);
         }
     }
 

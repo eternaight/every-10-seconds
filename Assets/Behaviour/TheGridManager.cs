@@ -7,9 +7,6 @@ public class TheGridManager : MonoBehaviour {
     private GridBit[,] gridBits;
     [SerializeField] private GameObject gridBitPrefab;
 
-    [Header("birth/survival/generations")]
-    [SerializeField] private string rulestring = "3/23/2";
-
     [Header("grid")]
     [SerializeField] private Automaton.FillType fillType = Automaton.FillType.BitRandom;
     [SerializeField] private Vector2Int dimensions = new(50, 100);
@@ -20,9 +17,11 @@ public class TheGridManager : MonoBehaviour {
 
     private void Start () {
         InitializeTheGrid();
-        automaton = new Automaton(rulestring, dimensions, fillType);
         WorldClock.OnTick += UpdateTheGrid;
+        MenuManager.OnExitMenu += RecreateAutomaton;
     }
+
+    private void RecreateAutomaton () => automaton = new Automaton(MenuManager.Rulestring, dimensions, fillType);
 
     private void Update () {
         float leftmostColDistance = theWrapAround.position.x - gridBits[leftmostColumn,0].transform.position.x;
