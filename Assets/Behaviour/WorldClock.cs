@@ -6,6 +6,7 @@ public class WorldClock : MonoBehaviour
     private static WorldClock singletonInstance;
 
     [SerializeField] private float periodSeconds = 10;
+    public static float PeriodSeconds => singletonInstance.periodSeconds;
 
     private void Start() {
 
