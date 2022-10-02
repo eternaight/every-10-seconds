@@ -22,7 +22,13 @@ public class Automaton {
         foreach (char c in rules[1]) survivalConditions.Add(c - '0');
         maxState = int.Parse(rules[2]) - 1;
 
-        // initializing the grid
+        CreateTheGrid(dimensions, fillType);
+
+        this.neighbourhoodRadius = neighbourhoodRadius;
+        this.wrap = wrap;
+    }
+
+    private void CreateTheGrid(Vector2Int dimensions, FillType fillType = FillType.BitRandom) {
         internalGrid = new int[dimensions.x, dimensions.y];
         switch (fillType) {
             case FillType.None:
@@ -47,9 +53,6 @@ public class Automaton {
                 internalGrid[Dimensions.x / 2, Dimensions.y / 2] = maxState;
                 break;
         }
-
-        this.neighbourhoodRadius = neighbourhoodRadius;
-        this.wrap = wrap;
     }
 
     public float[,] GetANormalizedGrid () {
