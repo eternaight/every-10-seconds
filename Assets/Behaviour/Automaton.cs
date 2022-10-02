@@ -6,8 +6,6 @@ public class Automaton {
     private readonly List<int> birthconditions = new();
     private readonly List<int> survivalConditions = new();
     private readonly int maxState = 1;
-    private readonly int neighbourhoodRadius;
-    private readonly bool wrap;
     
     private int[,] internalGrid;
 
@@ -15,7 +13,7 @@ public class Automaton {
 
     public enum FillType {None, BitRandom, Random, CenterDot}
 
-    public Automaton (string rulestring, Vector2Int dimensions, FillType fillType = FillType.BitRandom, int neighbourhoodRadius = 1, bool wrap = true) {
+    public Automaton (string rulestring, Vector2Int dimensions, FillType fillType = FillType.BitRandom) {
         string[] rules = rulestring.Split('/');
 
         foreach (char c in rules[0]) birthconditions.Add(c - '0');
@@ -23,9 +21,6 @@ public class Automaton {
         maxState = int.Parse(rules[2]) - 1;
 
         CreateTheGrid(dimensions, fillType);
-
-        this.neighbourhoodRadius = neighbourhoodRadius;
-        this.wrap = wrap;
     }
 
     private void CreateTheGrid(Vector2Int dimensions, FillType fillType = FillType.BitRandom) {
@@ -102,24 +97,21 @@ public class Automaton {
     private int CountNeighbours(int x, int y) {
         int neighbourCount = 0;
 
-        for (int xOffset = -neighbourhoodRadius; xOffset <= neighbourhoodRadius; xOffset++) {
-            for (int yOffset = -neighbourhoodRadius; yOffset <= neighbourhoodRadius; yOffset++) {
+        for (int xOffset = -1; xOffset <= 1; xOffset++) {
+            for (int yOffset = -1; yOffset <= 1; yOffset++) {
                 if (xOffset == 0 && yOffset == 0) continue;
 
-                if (SafeSample(x + xOffset, y + yOffset) == maxState) neighbourCount++;
+                if (WrappedSample(x + xOffset, y + yOffset) == maxState) neighbourCount++;
             }
         }
 
         return neighbourCount;
     }
 
-    private int SafeSample(int x, int y) {
-        int lastCellIdX = Dimensions.x - 1;
-        int lastCellIdY = Dimensions.y - 1;
+    private int WrappedSample(int x, int y) {
+        int wrappedCellX = (Dimensions.x + x) % Dimensions.x;
+        int wrappedCellY = (Dimensions.y + y) % Dimensions.y;
 
-        int safeCellIdX = wrap ? (lastCellIdX + x) % lastCellIdX : Mathf.Clamp(x, 0, lastCellIdX);
-        int safeCellIdY = wrap ? (lastCellIdY + y) % lastCellIdY : Mathf.Clamp(y, 0, lastCellIdY);
-
-        return internalGrid[safeCellIdX, safeCellIdY];
+        return internalGrid[wrappedCellX, wrappedCellY];
     }
 }

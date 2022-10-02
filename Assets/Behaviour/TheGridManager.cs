@@ -4,35 +4,44 @@ using UnityEngine;
 
 public class TheGridManager : MonoBehaviour {
     private Automaton automaton;
-
-    [SerializeField] private GameObject gridBitPrefab;
     private GridBit[,] gridBits;
+    [SerializeField] private GameObject gridBitPrefab;
 
     [Header("birth/survival/generations")]
     [SerializeField] private string rulestring = "3/23/2";
-
-    [Header("etc")]
-    [SerializeField] private int neighbourhoodRadius = 1;
-    [SerializeField] private bool wrap = true;
 
     [Header("grid")]
     [SerializeField] private Automaton.FillType fillType = Automaton.FillType.BitRandom;
     [SerializeField] private Vector2Int dimensions = new(50, 100);
     [SerializeField] private Vector2 pivot = new(0.5f, 0f);
+    [SerializeField] private Transform theWrapAround;
+    private int leftmostColumn;
+    private int rightmostColumn;
 
     private void Start () {
         InitializeTheGrid();
-        automaton = new Automaton(rulestring, dimensions, fillType, neighbourhoodRadius, wrap);
+        automaton = new Automaton(rulestring, dimensions, fillType);
         WorldClock.OnTick += UpdateTheGrid;
     }
 
     private void Update () {
-        if (Input.GetKeyDown(KeyCode.R)) {
-            Debug.Log("refreshing...");
+        float leftmostColDistance = theWrapAround.position.x - gridBits[leftmostColumn,0].transform.position.x;
+        float rightmostColDistance = gridBits[rightmostColumn,0].transform.position.x - theWrapAround.position.x;
+        float wrapThreshold = dimensions.x * 0.5f;
 
-            InitializeTheGrid();
-            automaton = new Automaton(rulestring, dimensions, fillType, neighbourhoodRadius, wrap);
+        if (leftmostColDistance  > wrapThreshold) WrapColumn(ref leftmostColumn, ref rightmostColumn);
+        if (rightmostColDistance > wrapThreshold) WrapColumn(ref rightmostColumn, ref leftmostColumn);
+    }
+
+    private void WrapColumn (ref int wrapCol, ref int oppositeCol) {
+        int wrapDir = (int)Mathf.Sign(gridBits[oppositeCol, 0].transform.position.x - gridBits[wrapCol, 0].transform.position.x);
+
+        for (int y = 0; y < dimensions.y; y++) {
+            gridBits[wrapCol, y].transform.position += new Vector3(dimensions.x * wrapDir, 0);
         }
+
+        oppositeCol = wrapCol;
+        wrapCol = (dimensions.x + wrapCol + wrapDir) % dimensions.x;
     }
 
     private void UpdateTheGrid () {
@@ -64,5 +73,8 @@ public class TheGridManager : MonoBehaviour {
                 gridBits[x, y] = gridBitGO.GetComponent<GridBit>();
             }
         }
+
+        leftmostColumn = 0;
+        rightmostColumn = dimensions.x - 1;
     }
 }

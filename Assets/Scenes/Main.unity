@@ -367,8 +367,9 @@ GameObject:
   - component: {fileID: 830070572}
   - component: {fileID: 830070571}
   - component: {fileID: 830070570}
+  - component: {fileID: 830070573}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -461,13 +462,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830070569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.088853836, y: -2.6, z: 0}
-  m_LocalScale: {x: 20, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalScale: {x: 30, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &830070573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830070569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14aade57a35d4f4beb70b9ca473713c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forWhom: {fileID: 1447783382}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,11 +766,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6615740de18d14c8838056db1e45a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 5
   jumpAscendTime: 0.67
   jumpFallTime: 0.4
   jumpFloatTime: 0.1
-  jumpHeight: 6
+  jumpHeight: 6.5
   driveX: 0
 --- !u!50 &1447783386
 Rigidbody2D:
@@ -811,11 +825,11 @@ MonoBehaviour:
   gridBitPrefab: {fileID: 8600657770733709492, guid: 992c737d88c9e16f59165d5b66e322d8,
     type: 3}
   rulestring: 3/23/2
-  neighbourhoodRadius: 1
-  wrap: 1
+  neighbourhoodRadius: 2
   fillType: 1
-  dimensions: {x: 50, y: 100}
+  dimensions: {x: 40, y: 60}
   pivot: {x: 0.5, y: 0}
+  theWrapAround: {fileID: 1447783382}
 --- !u!4 &2034494582
 Transform:
   m_ObjectHideFlags: 0
