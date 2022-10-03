@@ -107,7 +107,10 @@ public class MenuManager : MonoBehaviour {
 
     public void ChoosePreset (int id) {
         string rulestring = PresetToRulestring(id);
-        if (rulestring != "custom") rulestringInputField.text = rulestring;
+        if (rulestring != "custom") {
+            rulestringInputField.text = rulestring;
+            MenuManager.rulestring = rulestring;
+        }
     }
 
     private string PresetToRulestring (int id) => id switch {
