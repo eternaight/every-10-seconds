@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 2033317556, guid: 9902f4fccb7255c48aa1d74bab5548bb, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7004342931417896252}
   - component: {fileID: 3655344382596675122}
-  - component: {fileID: 1280424590938893548}
+  - component: {fileID: -6058804578783453201}
   - component: {fileID: -7830433820869929539}
   m_Layer: 0
   m_Name: GridBit
@@ -171,16 +171,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1280424590938893548
+--- !u!61 &-6058804578783453201
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8600657770733709492}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3376fb9331dd4165b91d37d7f2c16d7f, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -195,8 +195,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4439025, y: 1.4195122}
-  m_EdgeRadius: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0.18
 --- !u!114 &-7830433820869929539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,11 +209,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d245016f965e4f5a7c95253e12c085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockCollider: {fileID: 1280424590938893548}
+  blockCollider: {fileID: -6058804578783453201}
   blockSR: {fileID: 3655344382596675122}
   blockGradient:
     serializedVersion: 2
-    key0: {r: 0.09218879, g: 0.004004982, b: 0.09433961, a: 1}
+    key0: {r: 0.15686275, g: 0.039215688, b: 0.15686275, a: 1}
     key1: {r: 0.13349947, g: 0.16918617, b: 0.3773585, a: 1}
     key2: {r: 0.67301536, g: 0.7169812, b: 0.6842168, a: 0}
     key3: {r: 1, g: 1, b: 1, a: 0}
@@ -241,7 +241,6 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   glyphSR: {fileID: 7731349427131200257}
-  glyphExtensionColor: {r: 1, g: 1, b: 1, a: 1}
-  glyphRetractionColor: {r: 0.75618434, g: 0.33490568, b: 1, a: 1}
-  glyphNeutralColor: {r: 0, g: 0, b: 0, a: 0}
+  glyphActiveColor: {r: 1, g: 1, b: 1, a: 1}
+  glyphInactiveColor: {r: 0, g: 0, b: 0, a: 0}
   smoothness: 0.05

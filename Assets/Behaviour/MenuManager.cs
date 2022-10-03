@@ -10,12 +10,16 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private Behaviour thingToDisable;
     [SerializeField] private TMP_InputField rulestringInputField;
     [SerializeField] private TMP_Dropdown presetDropdown;
+    [SerializeField] private TMP_Text fillDensityText;
+    [SerializeField] private TMP_Text clockPeriodText;
 
     private static string rulestring = "3/23";
-    private static float clockPeriod = 10f;
+    private static float fillDensity = 0.5f;
+    private static int clockPeriod = 10;
 
     public static string Rulestring => rulestring;
-    public static float ClockPeriod => clockPeriod;
+    public static float FillDensity => fillDensity;
+    public static int ClockPeriod => clockPeriod;
 
     private void Start () {
         Time.timeScale = 0;
@@ -84,8 +88,15 @@ public class MenuManager : MonoBehaviour {
         _ => "3/23",
     };
 
-    public void UpdateClockPeriod (string clockPeriodString) {
-        float clockPeriod = float.Parse(clockPeriodString);
+    public void UpdateFillDensity (float value) {
+        float fillDensity = Mathf.Round(value * 10f) * 0.1f;
+        MenuManager.fillDensity = fillDensity;
+        fillDensityText.text = fillDensity.ToString();
+    }
+
+    public void UpdateClockPeriod (float value) {
+        int clockPeriod = (int)value;
         MenuManager.clockPeriod = clockPeriod;
+        clockPeriodText.text = clockPeriod.ToString();
     }
 }

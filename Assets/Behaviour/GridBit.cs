@@ -8,42 +8,40 @@ public class GridBit : MonoBehaviour {
     [SerializeField] private Gradient blockGradient;
 
     [SerializeField] private SpriteRenderer glyphSR;
-    [SerializeField] private Color glyphExtensionColor = Color.green;
-    [SerializeField] private Color glyphRetractionColor = Color.red;
-    [SerializeField] private Color glyphNeutralColor = Color.clear;
+    [SerializeField] private Color glyphActiveColor = Color.white;
+    [SerializeField] private Color glyphInactiveColor = Color.clear;
 
     [SerializeField] private float smoothness = 0.05f;
-    private float MoveNotice => MenuManager.ClockPeriod * 0.5f;
 
-    private float state;
+    private float state = 0f;
     private float queuedState;
-    private float noticeTimer;
 
-    private void Update () {
-        noticeTimer -= Time.deltaTime;
+    private void Start () {
+        glyphSR.color = glyphInactiveColor;
+        blockSR.color = blockGradient.Evaluate(0f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 1f);
+        blockCollider.enabled = false;
 
-        if (noticeTimer > 0f) {
-            glyphSR.color = 
-                Color.Lerp(glyphNeutralColor, 
-                queuedState > state ? glyphExtensionColor : glyphRetractionColor, 
-                1f - noticeTimer / MoveNotice);
-        }
-        else {
-            if (queuedState != state) {
-                state = queuedState;
-                blockCollider.enabled = state == 1f;
-            }
-
-            glyphSR.color = Color.Lerp(glyphSR.color, glyphNeutralColor, smoothness);
-            blockSR.color = Color.Lerp(blockSR.color, blockGradient.Evaluate(state), smoothness);
-            transform.position = Vector3.Lerp(transform.position, 
-                new Vector3(transform.position.x, transform.position.y, -state), smoothness);
-        }
+        WorldClock.OnTick += DequeueState;
     }
 
-    public void QueueState (float queuedState) {
-        if (queuedState == state) return;
-        this.queuedState = queuedState;
-        noticeTimer = MoveNotice;
+    private void Update () {
+        glyphSR.color = Color.Lerp(
+            glyphSR.color, 
+            state != queuedState ? glyphActiveColor : glyphInactiveColor, 
+            smoothness);
+
+        blockSR.color = Color.Lerp(blockSR.color, blockGradient.Evaluate(state), smoothness);
+        transform.position = Vector3.Lerp(transform.position, 
+            new Vector3(transform.position.x, transform.position.y, 1f - state), smoothness);
+    }
+
+    public void EnqueueState (float state) {
+        queuedState = state;
+    }
+
+    public void DequeueState() {
+        state = queuedState;
+        blockCollider.enabled = state == 1f;
     }
 }

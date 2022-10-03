@@ -8,45 +8,25 @@ public class Automaton {
     private readonly int maxState = 1;
     
     private int[,] internalGrid;
-
     private Vector2Int Dimensions => new(internalGrid.GetLength(0), internalGrid.GetLength(1));
 
-    public enum FillType {None, BitRandom, Random, CenterDot}
-
-    public Automaton (string rulestring, Vector2Int dimensions, FillType fillType = FillType.BitRandom) {
+    public Automaton (string rulestring, Vector2Int dimensions, float fillDensity = 0.5f) {
         string[] rules = rulestring.Split('/');
 
         foreach (char c in rules[0]) birthconditions.Add(c - '0');
         foreach (char c in rules[1]) survivalConditions.Add(c - '0');
         maxState = (rules.Length > 2) ? int.Parse(rules[2]) - 1 : 1;
 
-        CreateTheGrid(dimensions, fillType);
+        CreateTheGrid(dimensions, fillDensity);
     }
 
-    private void CreateTheGrid(Vector2Int dimensions, FillType fillType = FillType.BitRandom) {
+    private void CreateTheGrid (Vector2Int dimensions, float fillDensity = 0.5f) {
         internalGrid = new int[dimensions.x, dimensions.y];
-        switch (fillType) {
-            case FillType.None:
-                break;
-
-            case FillType.BitRandom:
-                for (int x = 0; x < Dimensions.x; x++) {
-                    for (int y = 0; y < Dimensions.y; y++) {
-                        internalGrid[x, y] = Random.value > 0.5f ? maxState : 0;
-                    }
-                }
-                break;
-            case FillType.Random:
-                for (int x = 0; x < Dimensions.x; x++) {
-                    for (int y = 0; y < Dimensions.y; y++) {
-                        internalGrid[x, y] = Random.Range(0, maxState + 1);
-                    }
-                }
-                break;
-
-            case FillType.CenterDot:
-                internalGrid[Dimensions.x / 2, Dimensions.y / 2] = maxState;
-                break;
+        
+        for (int x = 0; x < Dimensions.x; x++) {
+            for (int y = 0; y < Dimensions.y; y++) {
+                internalGrid[x, y] = Random.value < fillDensity ? maxState : 0;
+            }
         }
     }
 

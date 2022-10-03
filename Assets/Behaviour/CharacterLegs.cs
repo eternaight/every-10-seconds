@@ -22,6 +22,12 @@ public class CharacterLegs : MonoBehaviour
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
+
+        MenuManager.OnExitMenu += NullifyVelocity;
+    }
+
+    private void NullifyVelocity () {
+        rb.velocity = Vector2.zero;
     }
 
     private void FixedUpdate() {
