@@ -16,6 +16,8 @@ public class GridBit : MonoBehaviour {
     private float state = 0f;
     private float queuedState;
 
+    private bool IsGlyphworthy => state != queuedState && ( state == 0f || state == 1f );
+
     private void Start () {
         glyphSR.color = glyphInactiveColor;
         blockSR.color = blockGradient.Evaluate(0f);
@@ -28,7 +30,7 @@ public class GridBit : MonoBehaviour {
     private void Update () {
         glyphSR.color = Color.Lerp(
             glyphSR.color, 
-            state != queuedState ? glyphActiveColor : glyphInactiveColor, 
+            IsGlyphworthy ? glyphActiveColor : glyphInactiveColor, 
             smoothness);
 
         blockSR.color = Color.Lerp(blockSR.color, blockGradient.Evaluate(state), smoothness);
