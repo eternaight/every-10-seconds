@@ -13,18 +13,24 @@ public class GridBit : MonoBehaviour {
 
     [SerializeField] private float smoothness = 0.05f;
 
-    private float state = 0f;
+    private float state;
     private float queuedState;
 
     private bool IsGlyphworthy => state != queuedState && ( state == 0f || state == 1f );
 
     private void Start () {
+        MenuManager.OnExitMenu += Reset;
+        WorldClock.OnTick += DequeueState;
+    }
+
+    private void Reset () {
+        state = 0f;
+        queuedState = 0f;
+
         glyphSR.color = glyphInactiveColor;
         blockSR.color = blockGradient.Evaluate(0f);
         transform.position = new Vector3(transform.position.x, transform.position.y, 1f);
         blockCollider.enabled = false;
-
-        WorldClock.OnTick += DequeueState;
     }
 
     private void Update () {
