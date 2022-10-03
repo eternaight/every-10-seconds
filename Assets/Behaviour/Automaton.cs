@@ -63,11 +63,14 @@ public class Automaton {
                 // commit birth
                 return maxState;   
             }
-        } else { // if the cell is alive or dying
+        } else if (cellState == maxState) { // if the cell is alive
             if (!survivalConditions.Contains(numNeighbours)) { // if not enough neighbours for survival
-                // progress in dying
+                // start dying
                 return cellState - 1;
             }
+        } else { // if the cell is dying
+            // progress in dying
+            return cellState - 1;
         }
 
         // remain unchaged otherwise
