@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 public class MenuManager : MonoBehaviour {
     public static event System.Action OnExitMenu;
 
-    [SerializeField] private Behaviour thingToDisable;
+    [SerializeField] private GameObject menuCanvas;
     [SerializeField] private TMP_InputField rulestringInputField;
     [SerializeField] private TMP_Dropdown presetDropdown;
     [SerializeField] private TMP_Text fillDensityText;
@@ -30,25 +30,38 @@ public class MenuManager : MonoBehaviour {
     }
 
     public void GoAway () {
-        if (thingToDisable.enabled) {
-            thingToDisable.enabled = false;
+        if (menuCanvas.activeSelf) {
+            menuCanvas.SetActive(false);
             Time.timeScale = 1;
             
             OnExitMenu?.Invoke();
         }
         else {
-            thingToDisable.enabled = true;
+            menuCanvas.SetActive(true);
             Time.timeScale = 0;
         }
     }
 
-    public void UpdateRulestring (string rulestring) {
-        string cleanRulestring  = Regex.Replace(rulestring, "[^0-9\\/]", string.Empty);
-        if (rulestring != cleanRulestring) {
-            rulestringInputField.text = cleanRulestring;
-            return;
+    private void NormalizeRulestring (ref string rulestring) {
+        rulestring = Regex.Replace(rulestring, "[^0-9\\/]", string.Empty);
+
+        string[] rules = rulestring.Split('/');
+
+        for (int i = 0; i < 2; i++) {
+            List<char> normalizedRule = new();
+            foreach (char c in rules[i]) {
+                if (c == '9') continue;
+                if (!normalizedRule.Contains(c)) normalizedRule.Add(c);
+            }
+            normalizedRule.Sort();
+            rules[i] = string.Concat(normalizedRule);
         }
-        
+
+        rulestring = $"{rules[0]}/{rules[1]}";
+        if (rules.Length == 3) rulestring += $"/{rules[2]}";
+    }
+
+    public void UpdateRulestring (string rulestring) {
         int slashCount = 0;
         foreach (char c in rulestring) if (c == '/') slashCount++;
         
@@ -60,10 +73,28 @@ public class MenuManager : MonoBehaviour {
             rulestringInputField.textComponent.color = new Color(0.1960784f, 0.1960784f, 0.1960784f);
         }
 
-        MenuManager.rulestring = rulestring;
+        NormalizeRulestring(ref rulestring);
+        if (rulestringInputField.text != rulestring) {
+            rulestringInputField.text = rulestring;
+            return;
+        }
     }
 
-    public void RulestringIFOnEndEdit () {
+    public void FinalizeRulestring () {
+        if (rulestringInputField.textComponent.color == Color.red) {
+            rulestringInputField.text = "3/23";
+        }
+
+        string[] rules = rulestringInputField.text.Split('/');
+        
+        if (rules.Length == 3) {
+            if (!int.TryParse(rules[2], out int generations) || generations < 3) {
+                rulestringInputField.text = $"{rules[0]}/{rules[1]}";
+            }
+        }
+        
+        rulestring = rulestringInputField.text;
+
         for (int i = 0; i < presetDropdown.options.Count; i++) {
             if (PresetToRulestring(i) == rulestring) {
                 presetDropdown.value = i;
