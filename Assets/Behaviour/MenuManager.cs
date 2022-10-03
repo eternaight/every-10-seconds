@@ -14,7 +14,7 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private TMP_Text clockPeriodText;
 
     private static string rulestring = "3/23";
-    private static float fillDensity = 0.5f;
+    private static float fillDensity = 0.3f;
     private static int clockPeriod = 10;
 
     public static string Rulestring => rulestring;
