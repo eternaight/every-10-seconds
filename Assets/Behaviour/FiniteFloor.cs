@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer), typeof(Collider2D))]
 public class FiniteFloor : MonoBehaviour {
     [SerializeField] private Transform forWhom;
     private SpriteRenderer spriteRenderer;
