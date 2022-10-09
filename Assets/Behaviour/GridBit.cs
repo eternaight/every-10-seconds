@@ -18,18 +18,18 @@ public class GridBit : MonoBehaviour {
 
     private bool IsGlyphworthy => state != queuedState && ( state == 0f || state == 1f );
 
-    private void Start () {
-        MenuManager.OnExitMenu += Reset;
+    private void Awake () {
+        MenuManager.OnMenuEnter += Reset;
         WorldClock.OnTick += DequeueState;
+
+        glyphSR.color = glyphInactiveColor;
+        blockSR.color = blockGradient.Evaluate(0f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 1f);
     }
 
     private void Reset () {
         state = 0f;
         queuedState = 0f;
-
-        glyphSR.color = glyphInactiveColor;
-        blockSR.color = blockGradient.Evaluate(0f);
-        transform.position = new Vector3(transform.position.x, transform.position.y, 1f);
         blockCollider.enabled = false;
     }
 

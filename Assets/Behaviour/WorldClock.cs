@@ -4,8 +4,8 @@ public class WorldClock : MonoBehaviour
 {
     public static event System.Action OnPreTick, OnTick;
 
-    private void Start() {
-        MenuManager.OnExitMenu += Restart;
+    private void Awake () {
+        MenuManager.OnMenuExit += Restart;
     }
 
     private void Restart() {

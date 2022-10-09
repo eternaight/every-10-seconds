@@ -11,8 +11,8 @@ public class GizmoManager : MonoBehaviour {
 
     private float startElevation;
 
-    private void Start() {
-        MenuManager.OnExitMenu += Reset;
+    private void Awake () {
+        MenuManager.OnMenuEnter += Reset;
     }
 
     private void Reset () {

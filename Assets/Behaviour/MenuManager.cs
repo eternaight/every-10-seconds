@@ -5,7 +5,7 @@ using TMPro;
 using System.Text.RegularExpressions;
 
 public class MenuManager : MonoBehaviour {
-    public static event System.Action OnExitMenu;
+    public static event System.Action OnMenuExit, OnMenuEnter;
 
     [SerializeField] private GameObject menuCanvas;
     [SerializeField] private TMP_InputField rulestringInputField;
@@ -22,23 +22,25 @@ public class MenuManager : MonoBehaviour {
     public static int ClockPeriod => clockPeriod;
 
     private void Start () {
-        Time.timeScale = 0;
+        ToggleMenu();
     }
 
     private void Update () {
-        if (Input.GetKeyDown(KeyCode.Escape)) GoAway();
+        if (Input.GetKeyDown(KeyCode.Escape)) ToggleMenu();
     }
 
-    public void GoAway () {
+    public void ToggleMenu () {
         if (menuCanvas.activeSelf) {
             menuCanvas.SetActive(false);
             Time.timeScale = 1;
             
-            OnExitMenu?.Invoke();
+            OnMenuExit?.Invoke();
         }
         else {
             menuCanvas.SetActive(true);
             Time.timeScale = 0;
+
+            OnMenuEnter?.Invoke();
         }
     }
 

@@ -17,10 +17,10 @@ public class TheGridManager : MonoBehaviour {
     private int leftmostColumn;
     private int rightmostColumn;
 
-    private void Start () {
+    private void Awake () {
         InitializeTheGrid();
         WorldClock.OnPreTick += EnqueueTheGrid;
-        MenuManager.OnExitMenu += RecreateAutomaton;
+        MenuManager.OnMenuExit += RecreateAutomaton;
     }
 
     private void RecreateAutomaton () => automaton = new Automaton(MenuManager.Rulestring, dimensions, MenuManager.FillDensity);

@@ -10,11 +10,12 @@ public class FiniteFloor : MonoBehaviour {
 
     private float lifetime;
 
-    private void Start() {
+    private void Awake () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider2d = GetComponent<Collider2D>();
 
-        MenuManager.OnExitMenu += Floor;
+        MenuManager.OnMenuExit += Floor;
+        MenuManager.OnMenuEnter += Unfloor;
     }
 
     private void Update () {
@@ -30,5 +31,9 @@ public class FiniteFloor : MonoBehaviour {
     private void Floor () {
         transform.position = forWhom.position + Vector3.down * 0.5f;
         lifetime = MenuManager.ClockPeriod * 0.5f;
+    }
+
+    private void Unfloor () {
+        lifetime = 0f;
     }
 }

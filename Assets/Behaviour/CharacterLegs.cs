@@ -19,11 +19,11 @@ public class CharacterLegs : MonoBehaviour
 
     [HideInInspector] public float driveX;
 
-    private void Start() {
+    private void Awake () {
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
 
-        MenuManager.OnExitMenu += NullifyVelocity;
+        MenuManager.OnMenuEnter += NullifyVelocity;
     }
 
     private void NullifyVelocity () {
